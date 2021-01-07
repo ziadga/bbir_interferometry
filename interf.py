@@ -155,7 +155,7 @@ def main(args):
     plt.tight_layout()
     plt.xlim(left=-3200, right=3200)
     plt.ylim(bottom=0, top=1.1*np.amax(interferogram_spectrum[w_interf>1000]))
-    plt.show()
+    #plt.show()
     plt.savefig('test.png')
     return
 
