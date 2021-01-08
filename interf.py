@@ -127,7 +127,7 @@ def main(args):
             
             #Make fifth subplot
             ax = fig.add_subplot(gs[2,0], title='E(t)')
-            ax.plot(t[0:n], interf_t[0:n], lw=lw, label='$\int dt |E1+E2|^2$')
+            ax.plot(t[0:n], interf_t[0:n], lw=lw, label='$\int{dt {|E1+E2|}^2}$')
             ax.set(xlabel=tlabel, ylabel='Interferogram Signal')
             ax.legend(fontsize=lfs, loc='best', bbox_to_anchor=[1, 0, 0.5, 1])
             ax.autoscale(enable=True, axis='x', tight=True)
@@ -146,7 +146,7 @@ def main(args):
     interferogram_spectrum = np.sqrt(interferogram_spectrum)
 
     ax.plot(w_interf, interferogram_spectrum, lw=lw, label='FFT of interferogram')
-    ax.set(xlabel=tlabel, ylabel='FFT Power')
+    ax.set(xlabel=wlabel, ylabel='FFT Power')
     ax.legend(fontsize=lfs, loc='best', bbox_to_anchor=[1, 0, 0.5, 1])
     ax.autoscale(enable=True, axis='x', tight=True)
     ax.set_axisbelow(True)
