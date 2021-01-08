@@ -22,7 +22,7 @@ def main(args):
     ##Define BBIR spectrum
     c = 29979245800.0 #speed of light in cm/s
     _to_ps = 1.0e12 # convert from s to ps
-    w = make_w_axis(0.0,0.1,20000.0)#define frequency axis
+    w = make_w_axis(0.0,0.5,10000.0)#define frequency axis
     mu1, mu2 = 1320.0, 1680.0 #peak centers for the spectrum
     sig1, sig2 = 130.0, 130.0 #peak widths
     sig_w = 0.85*gaussian(w,mu1,sig1) + 1.0*gaussian(w,mu2,sig2) #define the spectrum
@@ -54,7 +54,8 @@ def main(args):
     
     if args.debug:
         print('Made time axis with ranging from {:.2f} to {:.2f} ps with center at index {} and delta_t of {:.2f} ps'.format(np.min(t)*_to_ps,np.max(t)*_to_ps,t[t0],dt*_to_ps))
-    sig_t = np.fft.ifft(np.sqrt(sig_w)) #complex (transform-limited) electric field in the time domain (note this sqrt was not in the MATLAB version)
+    #sig_t = np.fft.ifft(np.sqrt(sig_w)) #complex (transform-limited) electric field in the time domain (note this sqrt was not in the MATLAB version)
+    sig_t = np.fft.fft(np.sqrt(sig_w)) #complex (transform-limited) electric field in the time domain (note this sqrt was not in the MATLAB version) #try fft rather than ifft
     sig_t = np.fft.fftshift(sig_t)
 
     #Make second subplot
@@ -72,25 +73,25 @@ def main(args):
     #Make chirped pulses
     c1=2e11#chirp for arm1
     c2=1e11#chirp for arm2
-    sig_1=np.multiply(np.fft.ifft(np.sqrt(sig_w)), np.exp(-1j*(c1*np.multiply(w,t)+c1*np.multiply(w,t**2))))
+    sig_1=np.multiply(sig_t, np.exp(-1j*(c1*np.multiply(w,t)+c1*np.multiply(w,t**2))))
     sig_1 = np.real(np.fft.fftshift(sig_1))
-    sig_2_0=np.multiply(np.fft.ifft(np.sqrt(sig_w)), np.exp(-1j*(c2*np.multiply(w,t)+c2*np.multiply(w,t**2))))
+    sig_2_0=np.multiply(sig_t, np.exp(-1j*(c2*np.multiply(w,t)+c2*np.multiply(w,t**2))))
     sig_2_0 = np.real(np.fft.fftshift(sig_2_0))
     
-    #Make third subplot
-    ax = fig.add_subplot(gs[1,0], title='E(t)')
-    ax.plot(t, sig_1.real, 'b-', lw=lw, label='Re[E1]')
-    ax.plot(t, sig_2_0.real, 'r-', lw=lw, label='Re[E2]')
-    ax.set(xlabel=tlabel, ylabel=Elabel)
-    ax.legend(fontsize=lfs, loc='best', bbox_to_anchor=[1, 0, 0.5, 1])
-    ax.autoscale(enable=True, axis='x', tight=True)
-    ax.set_axisbelow(True)
-    plt.tight_layout()
-    plt.xlim(left=t[t0-100], right=t[t0+100])
+    ##Make third subplot
+    #ax = fig.add_subplot(gs[1,0], title='E(t)')
+    #ax.plot(t, sig_1.real, 'b-', lw=lw, label='Re[E1]')
+    #ax.plot(t, sig_2_0.real, 'r-', lw=lw, label='Re[E2]')
+    #ax.set(xlabel=tlabel, ylabel=Elabel)
+    #ax.legend(fontsize=lfs, loc='best', bbox_to_anchor=[1, 0, 0.5, 1])
+    #ax.autoscale(enable=True, axis='x', tight=True)
+    #ax.set_axisbelow(True)
+    #plt.tight_layout()
+    #plt.xlim(left=t[t0-100], right=t[t0+100])
 
     LIVE=False
     n=0
-    scan_range = np.arange(-400,400,1)
+    scan_range = np.arange(-200,200,1)
     interf_t = np.zeros((len(scan_range)))
     
     for t_n in scan_range:
@@ -100,7 +101,7 @@ def main(args):
 
         if LIVE or t_n==scan_range[-1]:
             #Update third subplot
-            ax.clear()
+            #ax.clear()
             ax = fig.add_subplot(gs[1,0], title='E1+E2')
             ax.plot(t, np.real(sig_1+sig_2),'m-',lw=lw, label='Re[E1+E2]')
             ax.plot(t, np.real(sig_1),'r-',lw=lw, label='Re[E1]')
