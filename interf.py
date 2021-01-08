@@ -90,7 +90,7 @@ def main(args):
 
     LIVE=False
     n=0
-    scan_range = np.arange(-100,100,1)
+    scan_range = np.arange(-150,150,1)
     interf_t = np.zeros((len(scan_range)))
     
     for t_n in scan_range:
@@ -139,7 +139,7 @@ def main(args):
     ax = fig.add_subplot(gs[2,1], title='FFT of Interferogram')
     interferogram_spectrum = np.abs(np.fft.fftshift(np.fft.fft(interf_t)))
     interferogram_spectrum = np.sqrt(interferogram_spectrum)
-    w_interf = np.fft.fftfreq(n=interf_t.size, d=dt)/(c)
+    w_interf = np.fft.fftfreq(n=interf_t.size, d=dt)*np.pi/(2.0*c)
     ax.plot(w_interf, interferogram_spectrum, lw=lw)
     ax.set(xlabel=wlabel, ylabel='FFT Power')
     ax.legend(fontsize=lfs, loc='best', bbox_to_anchor=[1, 0, 0.5, 1])
