@@ -28,7 +28,7 @@ def main(args):
     sig_w = 0.85*gaussian(w,mu1,sig1) + 1.0*gaussian(w,mu2,sig2) #define the spectrum
 
     ##Initlize Plot
-    fig = plt.figure(dpi=600, figsize=[2.0, 4.0], num=1) #initialize figure
+    fig = plt.figure(dpi=600, figsize=[0.5, 4.0], num=1) #initialize figure
     lw = 0.1 #default linewidth
     fs = 2 #default fontsize
     plt.rc('font', size=fs)
