@@ -31,13 +31,13 @@ def main(args):
     fig = plt.figure(dpi=600, figsize=[12, 6], num=1) #initialize figure A4 size
     lw = 0.1 #default linewidth
     lfs = 'xx-small'#legend font size
-    wlabel = 'wavenumber (cm$^{-1})' #w axis label
+    wlabel = 'wavenumber (cm$^{-1}$)' #w axis label
     Elabel = 'electric field (AU)' #electric field label
     tlabel = 'time (s)'
     gs = mpl.gridspec.GridSpec(3,2, figure=fig) #make two rows and three columns
 
     #Make first subplot
-    ax = fig.add_subplot(gs[0,0], title='|E(w)|$^2')
+    ax = fig.add_subplot(gs[0,0], title='$|E(w)|^2$')
     ax.plot(w, sig_w, 'b-', lw=lw)
     ax.set(xlabel=wlabel, ylabel=Elabel)
     ax.legend(fontsize=lfs, loc='best', bbox_to_anchor=[1, 0, 0.5, 1])
@@ -127,7 +127,7 @@ def main(args):
             
             #Make fifth subplot
             ax = fig.add_subplot(gs[2,0], title='E(t)')
-            ax.plot(t[0:n], interf_t[0:n], lw=lw, label='$\int dt |E1+E2|$^2')
+            ax.plot(t[0:n], interf_t[0:n], lw=lw, label='$\int dt |E1+E2|^2$')
             ax.set(xlabel=tlabel, ylabel='Interferogram Signal')
             ax.legend(fontsize=lfs, loc='best', bbox_to_anchor=[1, 0, 0.5, 1])
             ax.autoscale(enable=True, axis='x', tight=True)
