@@ -22,7 +22,7 @@ def main(args):
     ##Define BBIR spectrum
     c = 29979245800.0 #speed of light in cm/s
     _to_ps = 1.0e12 # convert from s to ps
-    w = make_w_axis(0.0,0.5,10000.0)#define frequency axis
+    w = make_w_axis(0.0,0.1,10000.0)#define frequency axis
     mu1, mu2 = 1320.0, 1680.0 #peak centers for the spectrum
     sig1, sig2 = 130.0, 130.0 #peak widths
     sig_w = 0.85*gaussian(w,mu1,sig1) + 1.0*gaussian(w,mu2,sig2) #define the spectrum
@@ -138,7 +138,7 @@ def main(args):
 
     #Make sixth subplot
     ax = fig.add_subplot(gs[2,1], title='FFT of Interferogram')
-    interferogram_spectrum = np.abs(np.fft.fftshift(np.fft.ifft(interf_t)))
+    interferogram_spectrum = np.abs(np.fft.fftshift(np.fft.fft(interf_t)))
     interferogram_spectrum = np.sqrt(interferogram_spectrum)
     w_interf = np.fft.fftfreq(n=interf_t.size, d=dt)/c
     ax.plot(w_interf, interferogram_spectrum, lw=lw)
