@@ -22,14 +22,14 @@ def main(args):
     ##Define BBIR spectrum
     c = 29979245800 #speed of light in cm/s
     _to_ps = 1e12 # convert from s to ps
-    w = make_w_axis(0,1,8192)#define frequency axis
+    w = make_w_axis(0,0.1,8192)#define frequency axis
     mu1, mu2 = 1320, 1680 #peak centers for the spectrum
     sig1, sig2 = 130, 130 #peak widths
     sig_w = 0.85*gaussian(w,mu1,sig1) + 1.0*gaussian(w,mu2,sig2) #define the spectrum
 
     ##Initlize Plot
     fig = plt.figure(dpi=600, figsize=[12, 6], num=1) #initialize figure A4 size
-    lw = 1.0 #default linewidth
+    lw = 0.5 #default linewidth
     lfs = 'xx-small'#legend font size
     wlabel = 'wavenumber (cm$^{-1}$)' #w axis label
     Elabel = 'electric field (AU)' #electric field label
@@ -44,7 +44,7 @@ def main(args):
     ax.autoscale(enable=True, axis='x', tight=True)
     ax.set_axisbelow(True)
     plt.xlim(left=800, right=2200)
-    plt.ylim(bottom=0, top=1)
+    plt.ylim(bottom=0, top=1.1)
 
     ##Define BBIR E field from FFT of spectrum
     t = np.arange(len(w)) #define time axis
