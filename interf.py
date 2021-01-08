@@ -154,7 +154,7 @@ def main(args):
     plt.rc('font', size=fs)
     plt.rc('lines', linewidth=1)
     #plt.show()
-    plt.savefig('test.png', orientation='landscape', bbox_inches='tight')
+    plt.savefig('test.png', bbox_inches='tight')
     return
 
 if __name__ == '__main__':
