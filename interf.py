@@ -70,8 +70,8 @@ def main(args):
     plt.xlim(left=t[t0]-0.2e-12, right=t[t0]+0.2e-12)
 
     #Make chirped pulses
-    c1=2e10#chirp for arm1
-    c2=1e10#chirp for arm2
+    c1=2e11#chirp for arm1
+    c2=1e11#chirp for arm2
     sig_1=np.multiply(np.fft.ifft(np.sqrt(sig_w)), np.exp(-1j*(c1*np.multiply(w,t)+c1*np.multiply(w,t**2))))
     sig_1 = np.real(np.fft.fftshift(sig_1))#sig_1 has a fixed phase, so we just keep the real part
     sig_2_0=np.multiply(np.fft.ifft(np.sqrt(sig_w)), np.exp(-1j*(c2*np.multiply(w,t)+c2*np.multiply(w,t**2))))#sig_1 has a changing phase, so we keep the full complex part
@@ -90,7 +90,7 @@ def main(args):
 
     LIVE=False
     n=0
-    scan_range = np.arange(-300,300,1)
+    scan_range = np.arange(-200,200,1)
     interf_t = np.zeros(len(scan_range))
     
     for t_n in scan_range:
@@ -135,17 +135,11 @@ def main(args):
             plt.tight_layout()
             if LIVE: plt.show()
 
-    #w_interf = np.arange(len(interf_t))
-    #w_interf = w_interf - np.mean(w_interf)
-    #w_interf = w_interf / np.max(w_interf)/2
-    #w_interf = w_interf/dt/c
-    w_interf = np.fft.fftfreq(n=interf_t.size, d=dt)/c
-        
-    #Make fifth subplot
+    #Make sixth subplot
     ax = fig.add_subplot(gs[2,1], title='FFT of Interferogram')
     interferogram_spectrum = np.abs(np.fft.fftshift(np.fft.fft(interf_t)))
     interferogram_spectrum = np.sqrt(interferogram_spectrum)
-
+    w_interf = np.fft.fftfreq(n=interf_t.size, d=dt)/c
     ax.plot(w_interf, interferogram_spectrum, lw=lw)
     ax.set(xlabel=wlabel, ylabel='FFT Power')
     ax.legend(fontsize=lfs, loc='best', bbox_to_anchor=[1, 0, 0.5, 1])
