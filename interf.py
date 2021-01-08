@@ -29,7 +29,7 @@ def main(args):
 
     ##Initlize Plot
     fig = plt.figure(dpi=600, figsize=[12, 6], num=1) #initialize figure A4 size
-    lw = 0.1 #default linewidth
+    lw = 1.0 #default linewidth
     lfs = 'xx-small'#legend font size
     wlabel = 'wavenumber (cm$^{-1}$)' #w axis label
     Elabel = 'electric field (AU)' #electric field label
@@ -75,8 +75,7 @@ def main(args):
     sig_1=np.multiply(np.fft.ifft(np.sqrt(sig_w)), np.exp(-1j*(c1*np.multiply(w,t)+c1*np.multiply(w,t**2))))
     sig_1 = np.real(np.fft.fftshift(sig_1))
     sig_2_0=np.multiply(np.fft.ifft(np.sqrt(sig_w)), np.exp(-1j*(c2*np.multiply(w,t)+c2*np.multiply(w,t**2))))
-    #sig_2_0 = np.real(np.fft.fftshift(sig_2_0))
-    sig_2_0 = np.fft.fftshift(sig_2_0)
+    sig_2_0 = np.real(np.fft.fftshift(sig_2_0))
     
     #Make third subplot
     ax = fig.add_subplot(gs[1,0], title='E(t)')
@@ -92,10 +91,10 @@ def main(args):
     LIVE=False
     n=0
     scan_range = np.arange(-200,200,1)
-    interf_t = np.zeros(len(scan_range))
+    interf_t = np.zeros((len(scan_range)))
     
     for t_n in scan_range:
-        sig_2 = np.real(np.roll(sig_2_0,t_n))#np.roll is used to scan the time axis
+        sig_2 = np.roll(sig_2_0,t_n)#np.roll is used to scan the time axis
         interf_t[n] = integrate.simps(np.power(np.abs(sig_1+sig_2),2.0),t) #the interferogram is the frequency-integrated, magnitude squared of the sum of the electric fields
         n = n + 1
 
