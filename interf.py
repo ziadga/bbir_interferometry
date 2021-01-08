@@ -71,8 +71,8 @@ def main(args):
     plt.xlim(left=t[t0]-0.2e-12, right=t[t0]+0.2e-12)
 
     #Make chirped pulses
-    c1=2e10#chirp for arm1
-    c2=1e10#chirp for arm2
+    c1=0e10#chirp for arm1
+    c2=0e10#chirp for arm2
     sig_1=np.multiply(sig_t, np.exp(-1j*(c1*np.multiply(w,t)+c1*np.multiply(w,t**2))))
     sig_1 = np.real(np.fft.fftshift(sig_1))
     sig_2_0=np.multiply(sig_t, np.exp(-1j*(c2*np.multiply(w,t)+c2*np.multiply(w,t**2))))
