@@ -91,7 +91,7 @@ def main(args):
 
     LIVE=False
     n=0
-    scan_range = np.arange(-200,200,1)
+    scan_range = np.arange(-400,400,1)
     interf_t = np.zeros((len(scan_range)))
     
     for t_n in scan_range:
