@@ -34,7 +34,7 @@ def main(args):
     wlabel = 'wavenumber (cm^{-1})' #w axis label
     Elabel = 'electric field (AU)' #electric field label
     tlabel = 'time (s)'
-    gs = mpl.gridspec.GridSpec(2,3, figure=fig) #make two rows and three columns
+    gs = mpl.gridspec.GridSpec(3,2, figure=fig) #make two rows and three columns
 
     #Make first subplot
     ax = fig.add_subplot(gs[0,0], title='|E(w)|^2')
@@ -78,7 +78,7 @@ def main(args):
     sig_2_0 = np.real(np.fft.fftshift(sig_2_0))
     
     #Make third subplot
-    ax = fig.add_subplot(gs[0,2], title='E(t)')
+    ax = fig.add_subplot(gs[1,0], title='E(t)')
     ax.plot(t, sig_1.real, 'b-', lw=lw, label='Re[E1]')
     ax.plot(t, sig_2_0.real, 'r-', lw=lw, label='Re[E2]')
     ax.set(xlabel=tlabel, ylabel=Elabel)
@@ -101,7 +101,7 @@ def main(args):
         if LIVE or t_n==scan_range[-1]:
             #Update third subplot
             ax.clear()
-            ax = fig.add_subplot(gs[0,2], title='E(t)')
+            ax = fig.add_subplot(gs[1,0], title='E(t)')
             ax.plot(t, np.real(sig_1+sig_2),'m-',lw=lw, label='Re[E1+E2]')
             ax.plot(t, np.real(sig_1),'r-',lw=lw, label='Re[E1]')
             ax.plot(t, np.real(sig_2),'b-',lw=lw, label='Re[E2]')
@@ -113,7 +113,7 @@ def main(args):
             plt.xlim(left=t[t0-500], right=t[t0+500])    
 
             #Make forth subplot
-            ax = fig.add_subplot(gs[1,0], title='E(t)')
+            ax = fig.add_subplot(gs[1,1], title='E(t)')
             ax.plot(t, np.real(sig_1+sig_2),'m-',lw=lw, label='Re[E1+E2]')
             ax.plot(t, np.real(sig_1),'r-',lw=lw, label='Re[E1]')
             ax.plot(t, np.real(sig_2),'b-',lw=lw, label='Re[E2]')
@@ -126,7 +126,7 @@ def main(args):
             plt.xlim(left=t[t0-100], right=t[t0+100])
             
             #Make fifth subplot
-            ax = fig.add_subplot(gs[1,1], title='E(t)')
+            ax = fig.add_subplot(gs[2,0], title='E(t)')
             ax.plot(t[0:n], interf_t[0:n], lw=lw, label='\int dt |E1+E2|^2')
             ax.set(xlabel=tlabel, ylabel='Interferogram Signal')
             ax.legend(fontsize=lfs, loc='best', bbox_to_anchor=[1, 0, 0.5, 1])
@@ -141,7 +141,7 @@ def main(args):
     w_interf = w_interf/dt/c
         
     #Make fifth subplot
-    ax = fig.add_subplot(gs[1,2], title='E(t)')
+    ax = fig.add_subplot(gs[2,1], title='E(t)')
     interferogram_spectrum = np.abs(np.fft.fftshift(np.fft.fft(interf_t)))
     interferogram_spectrum = np.sqrt(interferogram_spectrum)
 
