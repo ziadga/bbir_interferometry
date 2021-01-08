@@ -28,7 +28,7 @@ def main(args):
     sig_w = 0.85*gaussian(w,mu1,sig1) + 1.0*gaussian(w,mu2,sig2) #define the spectrum
 
     ##Initlize Plot
-    fig = plt.figure(dpi=600, figsize=[6, 12], num=1) #initialize figure A4 size
+    fig = plt.figure(dpi=600, figsize=[12, 12], num=1) #initialize figure A4 size
     lw = 0.1 #default linewidth
     lfs = 'xx-small'#legend font size
     wlabel = 'wavenumber (cm^{-1})' #w axis label
