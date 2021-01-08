@@ -140,6 +140,7 @@ def main(args):
     interferogram_spectrum = np.abs(np.fft.fftshift(np.fft.fft(interf_t)))
     interferogram_spectrum = np.sqrt(interferogram_spectrum)
     w_interf = np.fft.fftfreq(n=interf_t.size, d=dt)*2.0/(np.pi*c)
+    w_interf = np.fft.fftshift(w_interf)
     ax.plot(w_interf, interferogram_spectrum, lw=lw)
     ax.set(xlabel=wlabel, ylabel='FFT Power')
     ax.legend(fontsize=lfs, loc='best', bbox_to_anchor=[1, 0, 0.5, 1])
