@@ -22,7 +22,7 @@ def main(args):
     ##Define BBIR spectrum
     c = 29979245800.0 #speed of light in cm/s
     _to_ps = 1.0e12 # convert from s to ps
-    w = make_w_axis( 0.0, 4.0, 10000.0 )#define frequency axis
+    w = make_w_axis( 0.0, 1.0, 8096.0 )#define frequency axis
     mu1, mu2 = 1320.0, 1680.0 #peak centers for the spectrum
     sig1, sig2 = 130.0, 130.0 #peak widths
     sig_w = 0.85*gaussian(w,mu1,sig1) + 1.0*gaussian(w,mu2,sig2) #define the spectrum
@@ -70,8 +70,8 @@ def main(args):
     plt.xlim(left=t[t0]-0.2e-12, right=t[t0]+0.2e-12)
 
     #Make chirped pulses
-    c1=0e10#chirp for arm1
-    c2=0e10#chirp for arm2
+    c1=1.0e10#chirp for arm1
+    c2=1.0e10#chirp for arm2
     sig_1=np.multiply(sig_t, np.exp(-1j*(c1*np.multiply(w,t)+c1*np.multiply(w,t**2))))
     sig_1 = np.real(np.fft.fftshift(sig_1))
     sig_2_0=np.multiply(sig_t, np.exp(-1j*(c2*np.multiply(w,t)+c2*np.multiply(w,t**2))))
@@ -90,7 +90,7 @@ def main(args):
 
     LIVE=False
     n=0
-    scan_range = np.arange(-400,400,1)
+    scan_range = np.arange(-200,200,1)
     interf_t = np.zeros((len(scan_range)))
     
     for t_n in scan_range:
