@@ -55,7 +55,7 @@ def main(args):
     if args.debug:
         print('Made time axis with ranging from {:.2f} to {:.2f} ps with center at index {} and delta_t of {:.2f} ps'.format(np.min(t)*_to_ps,np.max(t)*_to_ps,t[t0],dt*_to_ps))
     #sig_t = np.fft.ifft(np.sqrt(sig_w)) #complex (transform-limited) electric field in the time domain (note this sqrt was not in the MATLAB version)
-    sig_t = np.fft.fft(np.sqrt(sig_w)) #complex (transform-limited) electric field in the time domain (note this sqrt was not in the MATLAB version) #try fft rather than ifft
+    sig_t = np.fft.ifft(np.sqrt(sig_w)) #complex (transform-limited) electric field in the time domain (note this sqrt was not in the MATLAB version) #try fft rather than ifft
     sig_t = np.fft.fftshift(sig_t)
 
     #Make second subplot
