@@ -110,7 +110,7 @@ def main(args):
             ax.autoscale(enable=True, axis='x', tight=True)
             ax.set_axisbelow(True)
             plt.tight_layout()
-            plt.xlim(left=t[t0-500], right=t[t0+500])    
+            plt.xlim(left=t[t0]-1.0e-12, right=t[t0]+1.0e-12)
 
             #Make forth subplot
             ax = fig.add_subplot(gs[1,1], title='E1+E2')
@@ -123,7 +123,7 @@ def main(args):
             ax.autoscale(enable=True, axis='x', tight=True)
             ax.set_axisbelow(True)
             plt.tight_layout()
-            plt.xlim(left=t[t0-100], right=t[t0+100])
+            plt.xlim(left=t[t0]-5.0e-12, right=t[t0]+5.0e-12)
             
             #Make fifth subplot
             ax = fig.add_subplot(gs[2,0], title='Interferogram')
