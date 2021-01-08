@@ -139,7 +139,7 @@ def main(args):
     ax = fig.add_subplot(gs[2,1], title='FFT of Interferogram')
     interferogram_spectrum = np.abs(np.fft.fftshift(np.fft.fft(interf_t)))
     interferogram_spectrum = np.sqrt(interferogram_spectrum)
-    w_interf = np.fft.fftfreq(n=interf_t.size, d=dt)/(np.pi*c)
+    w_interf = np.fft.fftfreq(n=interf_t.size, d=dt)/(c)
     ax.plot(w_interf, interferogram_spectrum, lw=lw)
     ax.set(xlabel=wlabel, ylabel='FFT Power')
     ax.legend(fontsize=lfs, loc='best', bbox_to_anchor=[1, 0, 0.5, 1])
