@@ -22,7 +22,7 @@ def main(args):
     ##Define BBIR spectrum
     c = 29979245800.0 #speed of light in cm/s
     _to_ps = 1.0e12 # convert from s to ps
-    w = make_w_axis(0.0,0.1,8192.0)#define frequency axis
+    w = make_w_axis(0.0,0.1,20000.0)#define frequency axis
     mu1, mu2 = 1320.0, 1680.0 #peak centers for the spectrum
     sig1, sig2 = 130.0, 130.0 #peak widths
     sig_w = 0.85*gaussian(w,mu1,sig1) + 1.0*gaussian(w,mu2,sig2) #define the spectrum
