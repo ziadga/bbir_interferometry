@@ -10,7 +10,7 @@ def make_w_axis(w_min=0,w_step=4,w_max=4096,taxis=0):
         waxis = np.arange(w_min,w_max,w_step,dtype=float)
     else:
         dt = taxis[1] - taxis[0]
-        waxis = np.linspace(-1/dt, 1/dt, len(taxis))
+        waxis = np.linspace(-1.0/dt, 1.0/dt, len(taxis))
     return waxis
 
 def gaussian(w, mu, sigma):
@@ -20,11 +20,11 @@ def gaussian(w, mu, sigma):
 
 def main(args):
     ##Define BBIR spectrum
-    c = 29979245800 #speed of light in cm/s
-    _to_ps = 1e12 # convert from s to ps
-    w = make_w_axis(0,0.1,8192)#define frequency axis
-    mu1, mu2 = 1320, 1680 #peak centers for the spectrum
-    sig1, sig2 = 130, 130 #peak widths
+    c = 29979245800.0 #speed of light in cm/s
+    _to_ps = 1.0e12 # convert from s to ps
+    w = make_w_axis(0.0,0.1,8192.0)#define frequency axis
+    mu1, mu2 = 1320.0, 1680.0 #peak centers for the spectrum
+    sig1, sig2 = 130.0, 130.0 #peak widths
     sig_w = 0.85*gaussian(w,mu1,sig1) + 1.0*gaussian(w,mu2,sig2) #define the spectrum
 
     ##Initlize Plot
