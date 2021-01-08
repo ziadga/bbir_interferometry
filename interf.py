@@ -101,7 +101,7 @@ def main(args):
         if LIVE or t_n==scan_range[-1]:
             #Update third subplot
             ax.clear()
-            ax = fig.add_subplot(gs[1,0], title='E(t)')
+            ax = fig.add_subplot(gs[1,0], title='E1+E2')
             ax.plot(t, np.real(sig_1+sig_2),'m-',lw=lw, label='Re[E1+E2]')
             ax.plot(t, np.real(sig_1),'r-',lw=lw, label='Re[E1]')
             ax.plot(t, np.real(sig_2),'b-',lw=lw, label='Re[E2]')
@@ -113,7 +113,7 @@ def main(args):
             plt.xlim(left=t[t0-500], right=t[t0+500])    
 
             #Make forth subplot
-            ax = fig.add_subplot(gs[1,1], title='E(t)')
+            ax = fig.add_subplot(gs[1,1], title='E1+E2')
             ax.plot(t, np.real(sig_1+sig_2),'m-',lw=lw, label='Re[E1+E2]')
             ax.plot(t, np.real(sig_1),'r-',lw=lw, label='Re[E1]')
             ax.plot(t, np.real(sig_2),'b-',lw=lw, label='Re[E2]')
@@ -126,7 +126,7 @@ def main(args):
             plt.xlim(left=t[t0-100], right=t[t0+100])
             
             #Make fifth subplot
-            ax = fig.add_subplot(gs[2,0], title='E(t)')
+            ax = fig.add_subplot(gs[2,0], title='Interferogram')
             ax.plot(t[0:n], interf_t[0:n], lw=lw, label='$\int{dt {|E1+E2|}^2}$')
             ax.set(xlabel=tlabel, ylabel='Interferogram Signal')
             ax.legend(fontsize=lfs, loc='best', bbox_to_anchor=[1, 0, 0.5, 1])
@@ -135,17 +135,18 @@ def main(args):
             plt.tight_layout()
             if LIVE: plt.show()
 
-    w_interf = np.arange(len(interf_t))
-    w_interf = w_interf - np.mean(w_interf)
-    w_interf = w_interf / np.max(w_interf)/2
-    w_interf = w_interf/dt/c
+    #w_interf = np.arange(len(interf_t))
+    #w_interf = w_interf - np.mean(w_interf)
+    #w_interf = w_interf / np.max(w_interf)/2
+    #w_interf = w_interf/dt/c
+    w_interf = np.fft.fftfreq(n=interf_t.size, d=dt)/c
         
     #Make fifth subplot
-    ax = fig.add_subplot(gs[2,1], title='E(t)')
+    ax = fig.add_subplot(gs[2,1], title='FFT of Interferogram')
     interferogram_spectrum = np.abs(np.fft.fftshift(np.fft.fft(interf_t)))
     interferogram_spectrum = np.sqrt(interferogram_spectrum)
 
-    ax.plot(w_interf, interferogram_spectrum, lw=lw, label='FFT of interferogram')
+    ax.plot(w_interf, interferogram_spectrum, lw=lw)
     ax.set(xlabel=wlabel, ylabel='FFT Power')
     ax.legend(fontsize=lfs, loc='best', bbox_to_anchor=[1, 0, 0.5, 1])
     ax.autoscale(enable=True, axis='x', tight=True)
