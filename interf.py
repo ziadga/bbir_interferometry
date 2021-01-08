@@ -22,7 +22,7 @@ def main(args):
     ##Define BBIR spectrum
     c = 29979245800.0 #speed of light in cm/s
     _to_ps = 1.0e12 # convert from s to ps
-    w = make_w_axis(0.0,0.1,10000.0)#define frequency axis
+    w = make_w_axis(0.0,0.01,10000.0)#define frequency axis
     mu1, mu2 = 1320.0, 1680.0 #peak centers for the spectrum
     sig1, sig2 = 130.0, 130.0 #peak widths
     sig_w = 0.85*gaussian(w,mu1,sig1) + 1.0*gaussian(w,mu2,sig2) #define the spectrum
@@ -54,8 +54,7 @@ def main(args):
     
     if args.debug:
         print('Made time axis with ranging from {:.2f} to {:.2f} ps with center at index {} and delta_t of {:.2f} ps'.format(np.min(t)*_to_ps,np.max(t)*_to_ps,t[t0],dt*_to_ps))
-    #sig_t = np.fft.ifft(np.sqrt(sig_w)) #complex (transform-limited) electric field in the time domain (note this sqrt was not in the MATLAB version)
-    sig_t = np.fft.ifft(np.sqrt(sig_w)) #complex (transform-limited) electric field in the time domain (note this sqrt was not in the MATLAB version) #try fft rather than ifft
+    sig_t = np.fft.ifft(np.sqrt(sig_w)) #complex (transform-limited) electric field in the time domain (note this sqrt was not in the MATLAB version)
     sig_t = np.fft.fftshift(sig_t)
 
     #Make second subplot
