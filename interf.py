@@ -31,7 +31,6 @@ def main(args):
     fig = plt.figure(dpi=1200, figsize=[5.0, 10.0], num=1) #initialize figure
     lw = 0.1 #default linewidth
     fs = 2 #default fontsize
-    plt.rc('font', size=fs)
     lfs = 'xx-small'#legend font size
     wlabel = 'wavenumber (cm^{-1})' #w axis label
     Elabel = 'electric field (AU)' #electric field label
@@ -155,6 +154,8 @@ def main(args):
     plt.tight_layout()
     plt.xlim(left=-3200, right=3200)
     plt.ylim(bottom=0, top=1.1*np.amax(interferogram_spectrum[w_interf>1000]))
+
+    plt.rc('font', size=fs)
     #plt.show()
     plt.savefig('test.png')
     return
