@@ -53,7 +53,8 @@ def main(args):
         max_t[n] = np.amax(t_temp)
         mean_dt[n] = np.mean(np.diff(t_temp))
     
-    t_global = np.arange(np.amax(min_t), np.amin(max_t), np.mean(mean_dt)/2.0)
+    dt_global = np.mean(mean_dt)/2.0
+    t_global = np.arange(np.amax(min_t), np.amin(max_t), dt_global)
     mct_mean = np.zeros_like(t_global)
     
     for n in np.arange(data_dict['N_scans']):
@@ -71,7 +72,7 @@ def main(args):
     fig = plt.figure(dpi=600, figsize=[12, 6], num=1) #initialize figure A4 size
     lw = 0.5 #default linewidth
     lfs = 'xx-small'#legend font size
-    gs = mpl.gridspec.GridSpec(1,1, figure=fig)
+    gs = mpl.gridspec.GridSpec(2,1, figure=fig)
     ax = fig.add_subplot(gs[0,0], title='averaged interferogram')
     ax.plot(t_global, mct_mean, 'b-', lw=lw)
     ax.set(xlabel='time (fs)')
@@ -79,6 +80,20 @@ def main(args):
     ax.autoscale(enable=True, axis='x', tight=True)
     ax.set_axisbelow(True)
     plt.tight_layout()
+
+    ax = fig.add_subplot(gs[1,0], title='averaged interferogram')
+    mct_fft = np.abs(np.fft.fft(mct_mean))
+    mct_fft = np.fft.fftshift(mct_fft)
+    w_fft = np.fft.fftfreq(n=mct_fft.size, d=dt_global)
+    w_fft = np.fft.fftshift(w_fft)/(2*np.pi*c)
+    ax.plot(w_fft, mct_fft, 'b-', lw=lw)
+    ax.set(xlabel='')
+    ax.set(ylabel='Interferogram')
+    ax.autoscale(enable=True, axis='x', tight=True)
+    plt.ylim(bottom=0, top=0.1*np.amax(mct_fft))
+    ax.set_axisbelow(True)
+    plt.tight_layout()
+
     fs = 8 #default fontsize
     plt.rc('font', size=fs)
     plt.rc('lines', linewidth=1)
