@@ -2,8 +2,10 @@ import os
 import numpy as np
 import math
 import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy import integrate
+
 
 c = 29979245800.0 #speed of light in cm/s
 _fs_per_nm = 3.33564095e-3 #time it takes light to travel 1 nm in fs
@@ -97,6 +99,7 @@ def main(args):
     plt.rc('font', size=fs)
     plt.rc('lines', linewidth=1)
     #plt.show()
+    plt.figtext(0.99, 0.01, str(args.dir), horizontalalignment='right', fontsize='xx-small')
     
     out_num = 1
     while True:
@@ -106,7 +109,7 @@ def main(args):
         else:
             break
     plt.savefig(out_fname, bbox_inches='tight')
-    print('saved to ' + out_fname)
+    print('saved ' + str(args.dir) + ' analysis to ' + out_fname)
     return
 
 if __name__ == '__main__':
