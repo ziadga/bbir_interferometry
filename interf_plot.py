@@ -50,26 +50,29 @@ def main(args):
     max_t = np.zeros((N_scans),dtype=float)
     mean_dt = np.zeros((N_scans),dtype=float)
 
-    for n in np.arange(data_dict['N_scans']):
+    for n in np.arange(N_scans):
         t_temp = data_dict['t_'+str(n+1)]
         min_t[n] = np.amin(t_temp)
         max_t[n] = np.amax(t_temp)
         mean_dt[n] = np.mean(np.diff(t_temp))
-    
     dt_global = np.mean(mean_dt)/2.0
     t_global = np.arange(np.amax(min_t), np.amin(max_t), dt_global)
+
     mct_mean = np.zeros_like(t_global)
-    
-    for n in np.arange(data_dict['N_scans']):
+    mct_all = np.zeros((N_scans, len(t_global)))
+    for n in np.arange(N_scans):
         t_temp = data_dict['t_'+str(n+1)]
         mct_temp = data_dict['mct_'+str(n+1)]
         mct_interp = np.interp(t_global, t_temp, mct_temp)
         data_dict['mct_'+str(n+1)+'interp'] = mct_interp
+        mct_all[n,:] = mct_interp
         mct_mean = mct_mean + mct_interp
 
-        min_t[n] = np.amin(t_temp)
-        max_t[n] = np.amax(t_temp)
-        mean_dt[n] = np.mean(np.diff(t_temp))
+    mct_median=np.zeros_like(mct_mean)
+    for n in np.arange(len(t_global)):
+        mct_median[n] = np.median(mct_all[:,n])
+    mct_mean = mct_median
+    
 
     ##Initlize Plot
     fig = plt.figure(dpi=600, figsize=[12, 6], num=1) #initialize figure A4 size
