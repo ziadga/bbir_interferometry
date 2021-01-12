@@ -85,7 +85,7 @@ def main(args):
     mct_fft = np.abs(np.fft.fft(mct_mean))
     mct_fft = np.fft.fftshift(mct_fft)
     w_fft = np.fft.fftfreq(n=mct_fft.size, d=dt_global*1e15)
-    w_fft = np.fft.fftshift(w_fft)/(2*np.pi*c)
+    w_fft = np.fft.fftshift(w_fft)/(2.0*np.pi*c)
     ax.plot(w_fft, mct_fft, 'b-', lw=lw)
     ax.set(xlabel='Wavenumber ($cm^{-1}$)')
     ax.set(ylabel='Interferogram')
