@@ -90,7 +90,7 @@ def main(args):
     ax.set(xlabel='')
     ax.set(ylabel='Interferogram')
     ax.autoscale(enable=True, axis='x', tight=True)
-    plt.ylim(bottom=0, top=0.001*np.amax(mct_fft))
+    plt.ylim(bottom=0, top=1e4)
     ax.set_axisbelow(True)
     plt.tight_layout()
 
