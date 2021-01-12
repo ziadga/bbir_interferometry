@@ -59,74 +59,59 @@ def main(args):
     t_global = np.arange(np.amax(min_t), np.amin(max_t), dt_global)
 
     mct_mean = np.zeros_like(t_global)
+    mct_all = np.zeros((N_scans, len(t_global)))
     for n in np.arange(N_scans):
         t_temp = data_dict['t_'+str(n+1)]
         mct_temp = data_dict['mct_'+str(n+1)]
         mct_interp = np.interp(t_global, t_temp, mct_temp)
         data_dict['mct_'+str(n+1)+'interp'] = mct_interp
-        mct_mean = mct_mean + mct_interp/N_scans
+        mct_all[n,:] = mct_interp
+        mct_mean = mct_mean + mct_interp
 
+    mct_median=np.zeros_like(mct_mean)
+    for n in np.arange(len(t_global)):
+        mct_median[n] = np.median(mct_all[:,n])
+    
     ##Initlize Plot
-    fig = plt.figure(dpi=600, figsize=[12, 5], num=1) #initialize figure A4 size
+    fig = plt.figure(dpi=600, figsize=[12, 6], num=1) #initialize figure A4 size
     lw = 0.5 #default linewidth
     lfs = 'xx-small'#legend font size
-    if(args.loadref):
-        gs = mpl.gridspec.GridSpec(2,2, figure=fig)
-    else:
-        gs = mpl.gridspec.GridSpec(1,2, figure=fig)
-
-    #Plot mean interferogram
+    gs = mpl.gridspec.GridSpec(2,2, figure=fig)
     ax = fig.add_subplot(gs[0,0], title='mean interferogram')
     ax.plot(t_global, mct_mean, 'b-', lw=lw)
     ax.set(xlabel='time (fs)')
-    ax.set(ylabel='Interferogram Intensity')
+    ax.set(ylabel='Interferogram')
     ax.autoscale(enable=True, axis='x', tight=True)
     ax.set_axisbelow(True)
     plt.tight_layout()
 
-    #Calculate FFT spectrum
+    ax = fig.add_subplot(gs[0,1], title='median interferogram')
+    ax.plot(t_global, mct_median, 'b-', lw=lw)
+    ax.set(xlabel='time (fs)')
+    ax.set(ylabel='Interferogram')
+    ax.autoscale(enable=True, axis='x', tight=True)
+    ax.set_axisbelow(True)
+    plt.tight_layout()
+
+    ax = fig.add_subplot(gs[1,0], title='FFT mean interferogram')
     mct_fft = np.abs(np.fft.fft(mct_mean))
     mct_fft = np.fft.fftshift(mct_fft)
     w_fft = np.fft.fftfreq(n=mct_fft.size, d=dt_global*_fs_to_s)
     w_fft = np.fft.fftshift(w_fft)*2.0/c
-
-    #Load reference if asked
-    if(args.loadref):
-        print('loading reference')
-        temp_w, temp_fft = np.loadtxt(args.refname)
-        ref_fft = np.interp(w_fft, temp_w, temp_fft)
-
-    #Plot FFT spectrum
-    ax = fig.add_subplot(gs[0,1], title='FFT mean interferogram')
     ax.plot(w_fft, mct_fft, 'b-', lw=lw)
-    if(args.loadref): ax.plot(w_fft, ref_fft, 'r-', lw=lw)
     ax.set(xlabel='Wavenumber ($cm^{-1}$)')
-    ax.set(ylabel='Interferogram Power (AU)')
+    ax.set(ylabel='Interferogram')
     plt.xlim(left=0, right=3000)
     plt.ylim(bottom=0, top=1.1*np.amax(mct_fft[w_fft>1000]))
 
-    if(args.loadref):
-        #Calculate difference spectrum
-        diff_spec = ref_fft - mct_fft
-
-        #Plot difference spectrum
-        ax = fig.add_subplot(gs[1,0], title='FFT mean interferogram')
-        ax.plot(w_fft, diff_spec, 'b-', lw=lw)
-        ax.set(xlabel='Wavenumber ($cm^{-1}$)')
-        ax.set(ylabel='Interferogram Power Diff (AU)')
-        plt.xlim(left=500, right=2500)
-        plt.autoscale(enable=True, axis='y')
-        
-        #Calculate normalized difference spectrum
-        diff_spec_n = np.divide(diff_spec, ref_fft)
-
-        #Plot ref normalized difference spectrum
-        ax = fig.add_subplot(gs[1,1], title='FFT mean interferogram')
-        ax.plot(w_fft, diff_spec_n, 'b-', lw=lw)
-        ax.set(xlabel='Wavenumber ($cm^{-1}$)')
-        ax.set(ylabel='Interferogram Power Diff Norm (AU)')
-        plt.xlim(left=500, right=2500)
-        plt.autoscale(enable=True, axis='y')
+    ax = fig.add_subplot(gs[1,1], title='FFT median interferogram')
+    mct_fft = np.abs(np.fft.fft(mct_median))
+    mct_fft = np.fft.fftshift(mct_fft)
+    ax.plot(w_fft, mct_fft, 'b-', lw=lw)
+    ax.set(xlabel='Wavenumber ($cm^{-1}$)')
+    ax.set(ylabel='Interferogram')
+    plt.xlim(left=0, right=3000)
+    plt.ylim(bottom=0, top=1.1*np.amax(mct_fft[w_fft>1000]))
 
     fs = 8 #default fontsize
     plt.rc('font', size=fs)
@@ -143,8 +128,6 @@ def main(args):
             break
     plt.savefig(out_fname, bbox_inches='tight')
     print('saved ' + str(args.dir) + ' analysis to ' + out_fname)
-    np.savetxt('out'+str(out_num)+'.txt', (w_fft, mct_fft))
-    print('saved data to ' + 'out'+str(out_num)+'.txt')
     return
 
 if __name__ == '__main__':
@@ -152,8 +135,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(add_help=False)
     parser.add_argument('--debug', action='store_true', help='turns on debugging output')
     parser.add_argument('--dir', help='which directory to analyze (no default)', required=True)
-    parser.add_argument('--loadref', action='store_true', help='loads and subtracts reference')
-    parser.add_argument('--refname', help='reference name')
     args = parser.parse_args()
     try:
         main(args)
