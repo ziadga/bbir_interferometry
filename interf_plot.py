@@ -71,15 +71,13 @@ def main(args):
     mct_median=np.zeros_like(mct_mean)
     for n in np.arange(len(t_global)):
         mct_median[n] = np.median(mct_all[:,n])
-    mct_mean = mct_median
     
-
     ##Initlize Plot
     fig = plt.figure(dpi=600, figsize=[12, 6], num=1) #initialize figure A4 size
     lw = 0.5 #default linewidth
     lfs = 'xx-small'#legend font size
-    gs = mpl.gridspec.GridSpec(2,1, figure=fig)
-    ax = fig.add_subplot(gs[0,0], title='averaged interferogram')
+    gs = mpl.gridspec.GridSpec(2,2, figure=fig)
+    ax = fig.add_subplot(gs[0,0], title='mean interferogram')
     ax.plot(t_global, mct_mean, 'b-', lw=lw)
     ax.set(xlabel='time (fs)')
     ax.set(ylabel='Interferogram')
@@ -87,7 +85,15 @@ def main(args):
     ax.set_axisbelow(True)
     plt.tight_layout()
 
-    ax = fig.add_subplot(gs[1,0], title='averaged interferogram')
+    ax = fig.add_subplot(gs[0,1], title='median interferogram')
+    ax.plot(t_global, mct_median, 'b-', lw=lw)
+    ax.set(xlabel='time (fs)')
+    ax.set(ylabel='Interferogram')
+    ax.autoscale(enable=True, axis='x', tight=True)
+    ax.set_axisbelow(True)
+    plt.tight_layout()
+
+    ax = fig.add_subplot(gs[1,0], title='FFT mean interferogram')
     mct_fft = np.abs(np.fft.fft(mct_mean))
     mct_fft = np.fft.fftshift(mct_fft)
     w_fft = np.fft.fftfreq(n=mct_fft.size, d=dt_global*_fs_to_s)
@@ -98,15 +104,24 @@ def main(args):
     plt.xlim(left=0, right=3000)
     plt.ylim(bottom=0, top=1.1*np.amax(mct_fft[w_fft>1000]))
 
+    ax = fig.add_subplot(gs[1,1], title='FFT median interferogram')
+    mct_fft = np.abs(np.fft.fft(mct_median))
+    mct_fft = np.fft.fftshift(mct_fft)
+    ax.plot(w_fft, mct_fft, 'b-', lw=lw)
+    ax.set(xlabel='Wavenumber ($cm^{-1}$)')
+    ax.set(ylabel='Interferogram')
+    plt.xlim(left=0, right=3000)
+    plt.ylim(bottom=0, top=1.1*np.amax(mct_fft[w_fft>1000]))
+
     fs = 8 #default fontsize
     plt.rc('font', size=fs)
     plt.rc('lines', linewidth=1)
     #plt.show()
-    plt.figtext(0.99, 0.01, str(args.dir), horizontalalignment='right', fontsize='xx-small')
+    plt.figtext(0.01, 0.99, str(args.dir), horizontalalignment='left')
     
     out_num = 1
     while True:
-        out_fname = 'test'+str(out_num)+'.png'
+        out_fname = 'out'+str(out_num)+'.png'
         if os.path.exists(out_fname):
             out_num += 1
         else:
