@@ -53,7 +53,7 @@ def main(args):
         max_t[n] = np.amax(t_temp)
         mean_dt[n] = np.mean(np.diff(t_temp))
     
-    t_global = np.arange(np.amax(min_t), np.amin(max_t), np.mean(mean_dt))
+    t_global = np.arange(np.amax(min_t), np.amin(max_t), np.mean(mean_dt)/2.0)
     mct_mean = np.zeros_like(t_global)
     
     for n in np.arange(data_dict['N_scans']):
