@@ -87,12 +87,10 @@ def main(args):
     w_fft = np.fft.fftfreq(n=mct_fft.size, d=dt_global*1e15)
     w_fft = np.fft.fftshift(w_fft)/(2*np.pi*c)
     ax.plot(w_fft, mct_fft, 'b-', lw=lw)
-    ax.set(xlabel='')
+    ax.set(xlabel='Wavenumber ($cm^{-1}$)')
     ax.set(ylabel='Interferogram')
-    ax.autoscale(enable=True, axis='x', tight=True)
+    plt.xlim(left=0, right=3000)
     plt.ylim(bottom=0, top=1e4)
-    ax.set_axisbelow(True)
-    plt.tight_layout()
 
     fs = 8 #default fontsize
     plt.rc('font', size=fs)
