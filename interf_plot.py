@@ -90,14 +90,14 @@ def main(args):
     ax.plot(w_fft, mct_fft, 'b-', lw=lw)
     ax.set(xlabel='Wavenumber ($cm^{-1}$)')
     ax.set(ylabel='Interferogram')
-    #plt.xlim(left=0, right=3000)
-    plt.ylim(bottom=0, top=1e6)
+    plt.xlim(left=0, right=3000)
+    plt.ylim(bottom=0, top=2e6)
 
     fs = 8 #default fontsize
     plt.rc('font', size=fs)
     plt.rc('lines', linewidth=1)
     #plt.show()
-    plt.savefig('test9.png', bbox_inches='tight')
+    plt.savefig('test10.png', bbox_inches='tight')
     return
 
 if __name__ == '__main__':
