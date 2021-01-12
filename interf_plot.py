@@ -97,7 +97,16 @@ def main(args):
     plt.rc('font', size=fs)
     plt.rc('lines', linewidth=1)
     #plt.show()
-    plt.savefig('test12.png', bbox_inches='tight')
+    
+    out_num = 1
+    while True:
+        out_fname = 'test'+str(out_num)+'.png'
+        if os.path.exists(out_fname):
+            out_num += 1
+        else:
+            break
+    plt.savefig(out_fname, bbox_inches='tight')
+    print('saved to ' + out_fname)
     return
 
 if __name__ == '__main__':
