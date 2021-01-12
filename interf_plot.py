@@ -89,7 +89,7 @@ def main(args):
     ax.plot(w_fft, mct_fft, 'b-', lw=lw)
     ax.set(xlabel='Wavenumber ($cm^{-1}$)')
     ax.set(ylabel='Interferogram')
-    plt.xlim(left=0, right=3000)
+    #plt.xlim(left=0, right=3000)
     plt.ylim(bottom=0, top=1e4)
 
     fs = 8 #default fontsize
