@@ -8,6 +8,7 @@ from scipy import integrate
 c = 29979245800.0 #speed of light in cm/s
 _fs_per_nm = 1.0e8/c #time it takes light to travel 1 nm in fs
 _s_to_ps = 1.0e12 # convert from s to ps
+_fs_to_s = 1.0/1.0e-15
 
 def make_w_axis(w_min=0,w_step=4,w_max=4096,taxis=0):
     #returns a frequency axis (cm-1) given either w min, step, max or a time axis in seconds
@@ -84,7 +85,7 @@ def main(args):
     ax = fig.add_subplot(gs[1,0], title='averaged interferogram')
     mct_fft = np.abs(np.fft.fft(mct_mean))
     mct_fft = np.fft.fftshift(mct_fft)
-    w_fft = np.fft.fftfreq(n=mct_fft.size, d=dt_global*1e15)
+    w_fft = np.fft.fftfreq(n=mct_fft.size, d=dt_global/_fs_to_s)
     w_fft = np.fft.fftshift(w_fft)/(2.0*np.pi*c)
     ax.plot(w_fft, mct_fft, 'b-', lw=lw)
     ax.set(xlabel='Wavenumber ($cm^{-1}$)')
@@ -96,7 +97,7 @@ def main(args):
     plt.rc('font', size=fs)
     plt.rc('lines', linewidth=1)
     #plt.show()
-    plt.savefig('test4.png', bbox_inches='tight')
+    plt.savefig('test5.png', bbox_inches='tight')
     return
 
 if __name__ == '__main__':
