@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from scipy import integrate
 
 c = 29979245800.0 #speed of light in cm/s
-_fs_per_nm = 1.0e8/c #time it takes light to travel 1 nm in fs
+_fs_per_um = 1.0e5/c #time it takes light to travel 1 um in fs
 _s_to_ps = 1.0e12 # convert from s to ps
 _fs_to_s = 1.0/1.0e-15
 
@@ -33,7 +33,7 @@ def loadInterferograms(directory):
             filename = template.format(filenum)
             temp_mct, temp_stage = np.loadtxt(directory+filename, unpack=True)
             data_dict['mct_'+str(filenum-1)] = temp_mct
-            data_dict['t_'+str(filenum-1)] = temp_stage*2*_fs_per_nm
+            data_dict['t_'+str(filenum-1)] = temp_stage*2*_fs_per_um
             filenum += 1
         except:
             data_dict['N_scans'] = filenum-2
