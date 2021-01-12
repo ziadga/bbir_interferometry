@@ -86,7 +86,7 @@ def main(args):
     mct_fft = np.abs(np.fft.fft(mct_mean))
     mct_fft = np.fft.fftshift(mct_fft)
     w_fft = np.fft.fftfreq(n=mct_fft.size, d=dt_global*_fs_to_s)
-    w_fft = 1.0e3*np.fft.fftshift(w_fft)/(2.0*np.pi*c)
+    w_fft = 3.0e4*np.fft.fftshift(w_fft)/(2.0*np.pi*c)
     ax.plot(w_fft, mct_fft, 'b-', lw=lw)
     ax.set(xlabel='Wavenumber ($cm^{-1}$)')
     ax.set(ylabel='Interferogram')
@@ -97,7 +97,7 @@ def main(args):
     plt.rc('font', size=fs)
     plt.rc('lines', linewidth=1)
     #plt.show()
-    plt.savefig('test8.png', bbox_inches='tight')
+    plt.savefig('test9.png', bbox_inches='tight')
     return
 
 if __name__ == '__main__':
