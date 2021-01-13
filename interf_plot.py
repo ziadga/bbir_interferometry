@@ -90,6 +90,14 @@ def main(args):
     w_fft = np.fft.fftfreq(n=mct_fft.size, d=dt_global*_fs_to_s)
     w_fft = np.fft.fftshift(w_fft)*2.0/c
 
+    #Perform spectrum statistics
+    w_stats = np.arange(1000,2000,1,dtype=float)
+    spec_stats = np.interp(w_stats, w_fft, mct_fft)
+    spec_center = np.divide(np.trapz(np.multiply(w_stats,spec_stats)), np.trapz(spec_stats))
+    spec_max = np.amax(spec_stats)
+    w_max = w_stats[np.argmax(spec_stats)]
+    print('Spectrum center at {:.2f} and max at {:.2f}, {:.2f}'.format(spec_center,w_max,spec_max))
+
     #Load reference if asked
     if(args.loadref):
         print('loading reference')
@@ -99,52 +107,61 @@ def main(args):
     #Plot FFT spectrum
     ax = fig.add_subplot(gs[0,1], title='FFT mean interferogram')
     ax.plot(w_fft, mct_fft, 'b-', lw=lw)
-    if(args.loadref): ax.plot(w_fft, ref_fft, 'r-', lw=lw)
+    if(args.loadref): 
+        ax.plot(w_fft, ref_fft, 'r-', lw=lw)
     ax.set(xlabel='Wavenumber ($cm^{-1}$)')
     ax.set(ylabel='Interferogram Power (AU)')
     plt.xlim(left=0, right=3000)
-    plt.ylim(bottom=0, top=1.1*np.amax(mct_fft[w_fft>1000]))
+    plt.ylim(bottom=0, top=1.1*spec_max)
 
     if(args.loadref):
         #Calculate difference spectrum
         diff_spec = ref_fft - mct_fft
+        w_min, w_max = 1000, 2000
+        scale_range = np.logical_and(w_fft > w_min, w_fft < w_max)
 
         #Plot difference spectrum
         ax = fig.add_subplot(gs[1,0], title='FFT mean interferogram')
         ax.plot(w_fft, diff_spec, 'b-', lw=lw)
         ax.set(xlabel='Wavenumber ($cm^{-1}$)')
         ax.set(ylabel='Interferogram Power Diff (AU)')
-        plt.xlim(left=500, right=2500)
-        plt.autoscale(enable=True, axis='y')
+        plt.xlim(left=w_min, right=w_max)
+        plt.ylim(bottom=1.1*np.amin(diff_spec[scale_range]), top=1.1*np.amax(diff_spec[scale_range]))
+
         
         #Calculate normalized difference spectrum
-        diff_spec_n = np.divide(diff_spec, ref_fft)
+        diff_spec_n = -np.log(np.divide(mct_fft, ref_fft))
 
         #Plot ref normalized difference spectrum
         ax = fig.add_subplot(gs[1,1], title='FFT mean interferogram')
         ax.plot(w_fft, diff_spec_n, 'b-', lw=lw)
+        ax.plot(w_fft, np.zeros_like(w_fft), 'k-', lw=lw)
         ax.set(xlabel='Wavenumber ($cm^{-1}$)')
         ax.set(ylabel='Interferogram Power Diff Norm (AU)')
-        plt.xlim(left=500, right=2500)
-        plt.autoscale(enable=True, axis='y')
+        plt.xlim(left=w_min, right=w_max)
+        plt.ylim(bottom=1.1*np.amin(diff_spec_n[scale_range]), top=1.1*np.amax(diff_spec_n[scale_range]))
 
     fs = 8 #default fontsize
     plt.rc('font', size=fs)
     plt.rc('lines', linewidth=1)
     #plt.show()
-    plt.figtext(0.01, 0.99, str(args.dir), horizontalalignment='left')
+    if args.loadref:
+        plt.figtext(0.01, 0.99, str(args.dir)+' ref '+args.refname, horizontalalignment='left')
+    else:
+        plt.figtext(0.01, 0.99, str(args.dir), horizontalalignment='left')
     
     out_num = 1
     while True:
-        out_fname = 'out'+str(out_num)+'.png'
+        out_fname = args.outname + 'outflip'+str(out_num)+'.png'
         if os.path.exists(out_fname):
             out_num += 1
         else:
             break
     plt.savefig(out_fname, bbox_inches='tight')
     print('saved ' + str(args.dir) + ' analysis to ' + out_fname)
-    np.savetxt('out'+str(out_num)+'.txt', (w_fft, mct_fft))
-    print('saved data to ' + 'out'+str(out_num)+'.txt')
+    if not args.loadref:
+        np.savetxt('out'+str(out_num)+'.txt', (w_fft, mct_fft))
+        print('saved data to ' + 'out'+str(out_num)+'.txt')
     return
 
 if __name__ == '__main__':
@@ -154,6 +171,7 @@ if __name__ == '__main__':
     parser.add_argument('--dir', help='which directory to analyze (no default)', required=True)
     parser.add_argument('--loadref', action='store_true', help='loads and subtracts reference')
     parser.add_argument('--refname', help='reference name')
+    parser.add_argument('--outname', default='', help='output name to prepend')
     args = parser.parse_args()
     try:
         main(args)
