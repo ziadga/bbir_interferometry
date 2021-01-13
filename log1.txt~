@@ -1,0 +1,103 @@
+Found\ 63\ files\
+Spectrum\ center\ at\ 1514.43\ and\ max\ at\ 1500.00\,\ 19394.18\
+saved\ /gpfs/scratch60/ganim/zg54/aerys/2020-12-15/test01-Au\ coated\ slide\ check\ scanning\ range/\ analysis\ to\ out1.png\
+saved\ data\ to\ out1.txt\
+Found\ 99\ files\
+Spectrum\ center\ at\ 1702.87\ and\ max\ at\ 1831.00\,\ 6378.26\
+saved\ /gpfs/scratch60/ganim/zg54/aerys/2020-12-15/test09-P4-QDs\ 800/\ analysis\ to\ out2.png\
+saved\ data\ to\ out2.txt\
+Found\ 9\ files\
+Spectrum\ center\ at\ 1567.41\ and\ max\ at\ 1690.00\,\ 18271.27\
+saved\ /gpfs/scratch60/ganim/zg54/aerys/2020-12-15/test11-P7-Empty\ Slide/\ analysis\ to\ out3.png\
+saved\ data\ to\ out3.txt\
+Found\ 99\ files\
+Spectrum\ center\ at\ 1575.51\ and\ max\ at\ 1691.00\,\ 13781.73\
+saved\ /gpfs/scratch60/ganim/zg54/aerys/2020-12-15/test02-B1/\ analysis\ to\ out4.png\
+saved\ data\ to\ out4.txt\
+Found\ 99\ files\
+Spectrum\ center\ at\ 1499.25\ and\ max\ at\ 1521.00\,\ 19379.02\
+saved\ /gpfs/scratch60/ganim/zg54/aerys/2020-12-15/test15-P1-Dronpa\ with\ Beads-Chop\ mode\ 0.44mW/\ analysis\ to\ out5.png\
+saved\ data\ to\ out5.txt\
+Found\ 99\ files\
+Spectrum\ center\ at\ 1530.99\ and\ max\ at\ 1501.00\,\ 10002.41\
+saved\ /gpfs/scratch60/ganim/zg54/aerys/2020-12-15/test03-S1-Dronpa\ with\ beads/\ analysis\ to\ out6.png\
+saved\ data\ to\ out6.txt\
+Found\ 9\ files\
+Spectrum\ center\ at\ 1556.65\ and\ max\ at\ 1690.00\,\ 15789.21\
+saved\ /gpfs/scratch60/ganim/zg54/aerys/2020-12-15/test19-Empty\ slide-\ same\ angle\ as\ test17/\ analysis\ to\ out7.png\
+saved\ data\ to\ out7.txt\
+Found\ 19\ files\
+Spectrum\ center\ at\ 1549.93\ and\ max\ at\ 1691.00\,\ 15048.11\
+saved\ /gpfs/scratch60/ganim/zg54/aerys/2020-12-15/test20-Empty\ slide-\ same\ angle\ as\ test17\ new\ scan\ range/\ analysis\ to\ out8.png\
+saved\ data\ to\ out8.txt\
+Found\ 9\ files\
+Spectrum\ center\ at\ 1556.77\ and\ max\ at\ 1360.00\,\ 12866.93\
+saved\ /gpfs/scratch60/ganim/zg54/aerys/2020-12-15/test14-P1-Dronpa\ with\ Beads-pump\ probe-\ check\ range/\ analysis\ to\ out9.png\
+saved\ data\ to\ out9.txt\
+Found\ -1\ files\
+negative\ dimensions\ are\ not\ allowed\ 0\
+Traceback\ \(most\ recent\ call\ last\)\:\
+\ \ File\ \"interf_plot.py\"\,\ line\ 176\,\ in\ \<module\>\
+\ \ \ \ raise\ e\
+\ \ File\ \"interf_plot.py\"\,\ line\ 173\,\ in\ \<module\>\
+\ \ \ \ main\(args\)\
+\ \ File\ \"interf_plot.py\"\,\ line\ 49\,\ in\ main\
+\ \ \ \ min_t\ \=\ np.zeros\(\(N_scans\)\,dtype\=float\)\
+ValueError\:\ negative\ dimensions\ are\ not\ allowed\
+Found\ 99\ files\
+Spectrum\ center\ at\ 1512.33\ and\ max\ at\ 1671.00\,\ 14164.92\
+saved\ /gpfs/scratch60/ganim/zg54/aerys/2020-12-15/test16-P3-Au\ Nanoshell-Chop\ mode\ 0.44mW/\ analysis\ to\ out10.png\
+saved\ data\ to\ out10.txt\
+Found\ 99\ files\
+Spectrum\ center\ at\ 1563.92\ and\ max\ at\ 1690.00\,\ 13335.60\
+saved\ /gpfs/scratch60/ganim/zg54/aerys/2020-12-15/test12-P6-Cy3/\ analysis\ to\ out11.png\
+saved\ data\ to\ out11.txt\
+Found\ 2\ files\
+diff\ requires\ input\ that\ is\ at\ least\ one\ dimensional\ 0\
+Traceback\ \(most\ recent\ call\ last\)\:\
+\ \ File\ \"interf_plot.py\"\,\ line\ 176\,\ in\ \<module\>\
+\ \ \ \ raise\ e\
+\ \ File\ \"interf_plot.py\"\,\ line\ 173\,\ in\ \<module\>\
+\ \ \ \ main\(args\)\
+\ \ File\ \"interf_plot.py\"\,\ line\ 57\,\ in\ main\
+\ \ \ \ mean_dt\[n\]\ \=\ np.mean\(np.diff\(t_temp\)\)\
+\ \ File\ \"\<__array_function__\ internals\>\"\,\ line\ 6\,\ in\ diff\
+\ \ File\ \"/home/zg54/.conda/envs​/pyforce2020/lib/python3.6/site-packages/numpy/lib/function_base.py\"\,\ line\ 1235\,\ in\ diff\
+\ \ \ \ raise\ ValueError\(\"diff\ requires\ input\ that\ is\ at\ least\ one\ dimensional\"\)\
+ValueError\:\ diff\ requires\ input\ that\ is\ at\ least\ one\ dimensional\
+Found\ 9\ files\
+Spectrum\ center\ at\ 1579.22\ and\ max\ at\ 1690.00\,\ 20756.87\
+saved\ /gpfs/scratch60/ganim/zg54/aerys/2020-12-15/test18-Empty\ slide\ 8mm\ to\ the\ left\ of\ test17/\ analysis\ to\ out12.png\
+saved\ data\ to\ out12.txt\
+Found\ 99\ files\
+Spectrum\ center\ at\ 1529.33\ and\ max\ at\ 1500.00\,\ 15963.18\
+saved\ /gpfs/scratch60/ganim/zg54/aerys/2020-12-15/test04-S2-Blank\ beads/\ analysis\ to\ out13.png\
+saved\ data\ to\ out13.txt\
+Found\ 99\ files\
+Spectrum\ center\ at\ 1525.65\ and\ max\ at\ 1561.00\,\ 15577.19\
+saved\ /gpfs/scratch60/ganim/zg54/aerys/2020-12-15/test17-P4-QDs800-Chop\ mode\ 0.44mW/\ analysis\ to\ out14.png\
+saved\ data\ to\ out14.txt\
+Found\ 9\ files\
+Spectrum\ center\ at\ 1692.48\ and\ max\ at\ 1840.00\,\ 9077.45\
+saved\ /gpfs/scratch60/ganim/zg54/aerys/2020-12-15/test06-S4-QDs\ check\ scan\ range/\ analysis\ to\ out15.png\
+saved\ data\ to\ out15.txt\
+Found\ 99\ files\
+Spectrum\ center\ at\ 1588.45\ and\ max\ at\ 1760.00\,\ 14561.05\
+saved\ /gpfs/scratch60/ganim/zg54/aerys/2020-12-15/test13-P5-Alexa555/\ analysis\ to\ out16.png\
+saved\ data\ to\ out16.txt\
+Found\ 4\ files\
+Spectrum\ center\ at\ 1591.37\ and\ max\ at\ 1690.00\,\ 21637.70\
+saved\ /gpfs/scratch60/ganim/zg54/aerys/2020-12-15/test07-B1\ Repeat/\ analysis\ to\ out17.png\
+saved\ data\ to\ out17.txt\
+Found\ 9\ files\
+Spectrum\ center\ at\ 1551.26\ and\ max\ at\ 1501.00\,\ 18547.28\
+saved\ /gpfs/scratch60/ganim/zg54/aerys/2020-12-15/test10-P8-Empty\ Slide/\ analysis\ to\ out18.png\
+saved\ data\ to\ out18.txt\
+Found\ 99\ files\
+Spectrum\ center\ at\ 1505.66\ and\ max\ at\ 1500.00\,\ 10750.35\
+saved\ /gpfs/scratch60/ganim/zg54/aerys/2020-12-15/test05-S3-Au\ NanoShells/\ analysis\ to\ out19.png\
+saved\ data\ to\ out19.txt\
+Found\ 99\ files\
+Spectrum\ center\ at\ 1566.28\ and\ max\ at\ 1690.00\,\ 14421.45\
+saved\ /gpfs/scratch60/ganim/zg54/aerys/2020-12-15/test08-B1\ Repeat/\ analysis\ to\ out20.png\
+saved\ data\ to\ out20.txt
